@@ -1,25 +1,29 @@
-from flask import Flask, render_template, request, make_response
-import subprocess
-import os
-import connect
+from flask import Flask, render_template, request
+import os, subprocess, connect
 
 app = Flask(__name__)
-    
+
 @app.route("/")
 def landing():
-    essid = os.popen('sudo iw wlan0 scan | egrep \'SSID\'', 'r')
-    essid = essid.read()
-    essid = essid.split('\n')
-    return render_template('index.html', essid = essid)
+    return render_template("index.html")
 
 @app.route("/connect", methods=["POST"])
-def repeaterConf():    
-    ssid = request.form['essid']
-    password = request.form['pass']
-    scheme = connect.SchemeWPA('wlan0', ssid, {"ssid": ssid,"psk": password})
+def repeaterConf():
+    iface = os.popen('sudo ls /run/wpa_supplicant/', 'r')
+    iface = iface.read()
+    iface = iface.split('\n')
+
+    ssid = request.form.get("essid")
+    password = request.form.get("pass")
+
+    scheme = connect.SchemeWPA(
+        iface[1],
+        ssid,
+        {"ssid": ssid, "psk": password}
+    )
     scheme.save()
-    subprocess.Popen(['shutdown','-r','+1'])
-    return render_template('connect.html')
-    
-if __name__=="__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080)
+
+    return "OK", 200
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)

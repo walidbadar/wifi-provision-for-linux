@@ -1,7 +1,7 @@
-<h1 id="webui">WebUI</h1>
-<p>This webUI is specifically designed to dynamically connect to a WiFi AP using the browser. </p>
+<h1 id="wifi-provision-for-linux">wifi-provision-for-linux</h1>
+<p>This wifi-provision-for-linux is specifically designed to dynamically connect to a WiFi AP using the browser. </p>
 
-<img src="https://i.imgur.com/rklcvAY.png" alt="webui" />
+<img src="https://i.imgur.com/rklcvAY.png" alt="wifi-provision-for-linux" />
 
 <h2 id="usage">Usage</h2>
 <ol>
@@ -20,8 +20,8 @@
 
 <h2 id="howto">How to use</h2>
 <ul>
-<li>Navigate to the <code>webui</code> directory using <code>cd webui</code></li>
-<li>Run the command <code>sudo python app.py</code> </li>
+<li>Navigate to the directory using <code>cd wifi-provision-for-linux</code></li>
+<li>Run the command <code>sudo python main.py</code> </li>
 </ul>
 <p>You can set the server to auto-start on boot using <code>systemd</code>
 <ul>
@@ -34,7 +34,7 @@
 
  [Service]
  Type=idle
- ExecStart=/usr/bin/python3 /home/pi/webui/app.py
+ ExecStart=/usr/bin/python3 /home/pi/wifi-provision-for-linux/main.py
 
  [Install]
  WantedBy=multi-user.target
